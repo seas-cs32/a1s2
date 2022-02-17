@@ -84,8 +84,8 @@ $
 ```
 
 **Step 2: Networked “smart” server, computer opponent, 1 round.** Split
-`roshambo.py` into two networking scripts: a client (`roshambo-dclient.py`); and
-a server (`roshambo-sserver.py`). To be clear, you should leave your
+`roshambo.py` into two networking scripts: a client (`roshambo_dclient.py`); and
+a server (`roshambo_sserver.py`). To be clear, you should leave your
 `roshambo.py` script alone and create two new scripts, copying content from
 `roshambo.py`, `guess-client.py`, and `guess-server.py` as appropriate.
 
@@ -127,7 +127,7 @@ terminal window, start the server script in background by appending an ampersand
 **Step 3: Networked “dumb” server, computer opponent, 1 round.** Make a copy of
 your networked client and server scripts from Step 2, and then rearchitect these
 copies so that you put the smarts in the client, not the server. Call your new
-networked client `roshambo-sclient.py` and the server `roshambo-dserver.py`.
+networked client `roshambo_sclient.py` and the server `roshambo_dserver.py`.
 Your “dumb” server obviously has to do the same networking work as you did with
 your server in Step 2, but otherwise, it should only receive a request from the
 client to generate a random choice and then send that choice back to the client.
@@ -138,7 +138,7 @@ they were running a pair from this step or the previous one. When you’ve
 succeeded in getting this step to work, you’ve just experienced how the same
 functionality can be implemented in multiple different ways all below a level of
 abstraction. That said, do you see any benefits of this decomposition of the
-game over the previous decomposition? 
+game over the previous decomposition?
 
 **Step 4: Non-networked, computer opponent, 3 rounds.** Playing a single round
 eliminates the most intriguing part of the game, and that is trying to recognize
@@ -185,15 +185,15 @@ $
 it’s time to rearchitect the non-networked `roshambo3.py` into a client and
 server piece. However, we can now start reusing entire scripts we’ve built
 previously. Copy your `roshambo3.py` script and name this new copy
-`roshambo3-sclient.py`. You’re going to turn this code into a smart client, and
+`roshambo3_sclient.py`. You’re going to turn this code into a smart client, and
 you’re going to have this client communicate with a running instance of
-`roshambo-dserver.py` from Step 3. Remember that we built these networked
+`roshambo_dserver.py` from Step 3. Remember that we built these networked
 servers to respond to as many rounds as the client wanted during its single
 connection. When you’ve successfully completed this step, you’ll have
 experienced how a single server can be architected and implemented so that it
 handles many different client use cases.
 
-How do you change `roshambo3.py` into ` roshambo3-sclient.py`? You need to make
+How do you change `roshambo3.py` into ` roshambo3_sclient.py`? You need to make
 very few changes! Don’t forget to `import` the `socket` library and have your
 client open only one connection to the server during the match!
 
@@ -201,28 +201,36 @@ client open only one connection to the server during the match!
 you’ve been waiting. Let’s stop playing against the computer and start playing
 against a human opponent. Follow these steps to get started:
 
-1. Copy your script `roshambo-dserver.py` and name the new file
-   `roshambo3-2p-server.py`. 
+1. Copy your script `roshambo_dserver.py` and name the new file
+   `roshambo3_2p_server.py`.
 
-2. Copy your script `roshambo3-sclient.py` and name the new file
-   `roshambo3-2p-client.py`.
+2. Copy your script `roshambo3_sclient.py` and name the new file
+   `roshambo3_2p_client.py`.
 
 3. Pull out the statements that query a player for their hand choice and put
-   them into a function called `player_choice` inside `roshambo3-2p-client.py`.
+   them into a function called `player_choice` inside `roshambo3_2p_client.py`.
    Make sure you include all the error checking inside this function. It
    shouldn’t need to take any parameters, and it should return the player’s
    choice. We’re doing this because, with two players on two different
    computers, we need both the client and server to call this function in their
    code.
 
-4. In `roshambo3-2p-server.py`, remove the `import random` statement and replace
+4. In `roshambo3_2p_server.py`, remove the `import random` statement and replace
    it with the statements below. Without a computer opponent, we don’t need the
    `random` library anymore, but our server will need to import `player_choice`
-   from `roshambo3-2p-client.py`. We have to use this complicated way of
-   importing our client as a module because module names are Python identifiers
-   (e.g., variable names), and you cannot use a hyphen in a Python identifier
-   (because it will be interpreted as a minus sign!). By using the functionality
-   in `importlib`, which allows you to extend Python’s import functionality, we
+   from `roshambo3_2p_client.py`.
+
+```python
+import roshambo3_2p_client as rlib
+```
+
+<blockquote>
+
+   NOTE (not important for the pset): there's a good reason why we're using underscores in `roshambo3_2p_client.py` rather than
+   dashes (e.g. `roshambo3-2p-client.py`). Trying to import `roshambo3-2p-client.py` like we do above
+   wouldn't work! This is because module names are Python identifiers (e.g., variable names),
+   and you cannot use a hyphen in a Python identifier (because it will be interpreted as a minus sign!).
+   By using the functionality in `importlib`, which allows you to extend Python’s import functionality, we
    can get around this limitation and avoid creating an appropriately named
    Python library module for our one shared function.
 
@@ -230,6 +238,8 @@ against a human opponent. Follow these steps to get started:
 import importlib
 rlib = importlib.import_module('roshambo3-2p-client')
 ```
+
+</blockquote>
 
 We’re taking another shortcut in our 2-player, networked application that you
 should understand. Normally, all players in such a game like we’re building
@@ -283,10 +293,10 @@ the header before printing the message (i.e., the server just prints the body of
 your message). Your header can be text just like our messages have always been.
 While you can include this header in the messages from the server to the client,
 you may find it isn’t necessary. It’s communication work is very simple, as it
-was in `roshambo3-dserver.py`.
+was in `roshambo3_dserver.py`.
 
 Good luck! Test this using the loopback interface. You can also have this new
-client play against the `roshambo-dserver.py` if necessary.
+client play against the `roshambo_dserver.py` if necessary.
 
 **Step 7 (OPTIONAL): Playing across machines.** When things work using the
 loopback interface, find a friend and try playing across a local area network.
@@ -302,7 +312,7 @@ server, and vice versa?
 client-server architecture that lets two people interact or collaborate, what
 other type of simple back-and-forth might you modify this code to support? Be
 creative. You can post a message about your creative ideas on the Ed site for CS
-32. This is a great way for you to start imagining what you might build as your
+1.  This is a great way for you to start imagining what you might build as your
 final project in this class. It's never too early to start dreaming!
 
 
