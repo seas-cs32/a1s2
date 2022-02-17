@@ -1,3 +1,5 @@
+"""CS 32 helper library for Act I, Scene II"""
+
 from rich.traceback import install
 
 install(show_locals=True)

@@ -1,13 +1,10 @@
 # Guessing game -- server
 
 import random
-
 from socket32 import create_new_socket
-
 
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
-
 
 def main():
     secret = random.randint(1, 100)
@@ -16,10 +13,7 @@ def main():
     with create_new_socket() as s:
         s.bind(HOST, PORT)
         s.listen()
-        print(
-            f"GUESS-THE-NUMBER server started. Listening on host {HOST} at port {PORT} ({HOST}:{POST})",
-            (HOST, PORT),
-        )
+        print("GUESS-THE-NUMBER server started. Listening on", (HOST, PORT))
 
         conn, addr = s.accept()
         with conn:
@@ -41,7 +35,6 @@ def main():
                     conn.sendall('Too big!')
 
             print('Disconnected')
-
 
 if __name__ == '__main__':
     main()

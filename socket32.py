@@ -1,3 +1,5 @@
+"""CS 32 helper library for Act I, Scene II"""
+
 from typing import Tuple
 import socket
 from check32 import check_arg
@@ -11,9 +13,8 @@ BUFFER_SIZE = 1024
 
 
 class Socket32:
-    """Socket32 is our custom socket class. We simplify
-    `socket.socket` to allow you to connect to a network
-    and do client/server operations
+    """Socket32 is the CS32 custom socket class that simplifies
+    client/server scripts built on top of `socket.socket`
 
     Example usage:
 

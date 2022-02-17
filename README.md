@@ -18,6 +18,9 @@ programming.
 `guess*.py`: Scripts we use together in class as we learn how to build a
 networked game.
 
+`socket32.py`, `check32.py`: Scripts that you **don't** need to understand.  They
+put a simpler interface on the `socket` library.
+
 `pset2.md`: The description of the programming assignment for Act I
 Scene II. Please see the Canvas Assignments page for when it is due.
 

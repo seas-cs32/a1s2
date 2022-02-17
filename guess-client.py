@@ -1,20 +1,15 @@
 # Guessing game -- client
+
 from socket32 import create_new_socket
 
 HOST = '127.0.0.1'  # The server's hostname or IP address
 PORT = 65432  # The port used by the server
-
 
 def main():
     print('## Welcome to GUESS THE NUMBER! ##')
 
     with create_new_socket() as s:
         s.connect(HOST, PORT)
-
-        print(
-            f"GUESS-THE-NUMBER client started. Listening on host {HOST} at port {PORT} ({HOST}:{POST})",
-            (HOST, PORT),
-        )
 
         while True:
             # Grab a guess from the player
@@ -31,7 +26,6 @@ def main():
 
             if response == 'Exactly! You win!':
                 break
-
 
 if __name__ == '__main__':
     main()
